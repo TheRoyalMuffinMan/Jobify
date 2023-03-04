@@ -1,5 +1,5 @@
 import { chakra, Text } from '@chakra-ui/react';
-import Hero from "./components/Hero";
+import Header from './components/Header';
 
 export default function Home({ hackathons }: any) {
     return (
@@ -7,15 +7,9 @@ export default function Home({ hackathons }: any) {
             display="flex" 
             flexDirection="column" 
             minHeight="100vh"
+            bg="#0F172A"
         >
-            <Hero />
-            {hackathons.length === 0 ? (
-                <Text align="center">No Hackathons To List</Text>
-            ) : (
-                hackathons.map((hack: any, i: any) => {
-                    return <Text align="center" key={i}>{hack.hackathon_name}</Text>
-                })
-            )}
+            <Header />
         </chakra.div>
     ); 
 }
