@@ -5,14 +5,24 @@ export default function Hero() {
         <Flex
             justify="space-between"
             align="center"
-            p="1rem"
-            borderBottom="1px solid #94a3b8"
+            p="2rem"
+            m="4rem"
+            color="#0EA5E9"
         >
             <Text
                 fontSize="2rem"
-                color="#e2e8f0"
             >
-                JOBIFY
+                Stay Safe
+            </Text>
+            <Text
+                fontSize="2rem"
+            >
+                Save Time
+            </Text>
+            <Text
+                fontSize="2rem"
+            >
+                Protect Yourself
             </Text>
         </Flex>
     )
