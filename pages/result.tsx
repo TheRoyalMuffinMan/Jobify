@@ -1,11 +1,11 @@
-import { chakra, Flex, Spinner } from '@chakra-ui/react';
+import { chakra, Flex, Spinner, CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 import Header from './components/Header';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function Result() {
     const router = useRouter();
-    const [result, setResult] = useState<string | undefined>(undefined);
+    const [result, setResult] = useState<any | undefined>(undefined);
 
     useEffect(() => {
         if (!router.query || Object.keys(router.query).length === 0) {
@@ -14,6 +14,10 @@ export default function Result() {
     }, [router]);
 
     async function analysis(params: object) {
+
+        if (!params || Object.keys(params).length === 0) {
+            router.push("/");
+        }
         const response = await fetch("/api/analyzer", {
             method: "POST",
             body: JSON.stringify(params)
@@ -23,13 +27,13 @@ export default function Result() {
             throw new Error("Failed to make post");
         }
 
-        const result = await response.json();
-        console.log(result);
+        const res = await response.json();
+        setResult(res);
     }
 
     useEffect(() => {
         analysis(router.query);
-    });
+    }, []);
 
 
     if (result === undefined) {
@@ -54,7 +58,7 @@ export default function Result() {
         )
     }
 
-
+    console.log(result);
 
     return (
         <chakra.div 
@@ -64,6 +68,18 @@ export default function Result() {
             bg="#0F172A"
         >
             <Header />
+            <Flex justify="space-evenly" align="center" flex="1" color="#0EA5E9">
+                <CircularProgress size="400px" value={result.real * 100} color='green.400'>
+                    <CircularProgressLabel fontSize="2rem" boxSize="200px">
+                        {`${(result.real * 100).toFixed(4)}% Likely to be a Real Job Posting`}
+                    </CircularProgressLabel>
+                </CircularProgress>
+                <CircularProgress size="400px" value={result.fake * 100} color='green.400'>
+                    <CircularProgressLabel fontSize="2rem" boxSize="200px">
+                        {`${(result.fake * 100).toFixed(4)}% Likely to be a Fake Job Posting`}
+                    </CircularProgressLabel>
+                </CircularProgress>
+            </Flex>
 
         </chakra.div>
     ); 

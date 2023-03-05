@@ -6,6 +6,8 @@ const { run, remove_stopwords } = require("../../lib/model");
 
 type Data = {
     response: string;
+    real: number;
+    fake: number;
     success?: boolean
 }
 
@@ -19,7 +21,6 @@ async function clean(encoder: any, text: string) {
 }
 
 async function pipeline(xData: any) {
-    console.log(xData);
     const encoder = await use.load();
     let title = await clean(encoder, xData.title);
     let location = await clean(encoder, xData.location);
@@ -56,10 +57,26 @@ async function pipeline(xData: any) {
 }
 
 async function analyzer(req: NextApiRequest, res: NextApiResponse<Data>) {
+    const parsed = JSON.parse(req.body);
+    if (!parsed || Object.keys(parsed).length === 0) {
+        res.json({
+            response: "Model Failed",
+            real: 0,
+            fake: 0,
+            success: false
+        });
+        return;
+    }
+
     const model = await run();
-    const xPredict = await pipeline(JSON.parse(req.body));
-    console.log(xPredict);
-    console.log(await model.predict(xPredict).data());
+    const xPredict = await pipeline(parsed);
+    const results = await model.predict(xPredict).data();
+    res.json({
+        response: "Model completed",
+        real: results[0],
+        fake: results[1],
+        success: true
+    });
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -68,7 +85,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         case 'POST':
             analyzer(req, res); break;
         default:
-            res.status(403).json({ response: "Invalid Request Method", success: false }) 
+            res.status(403).json({ response: "Invalid Request Method", real: 0, fake: 0, success: false }) 
     }
 }
 

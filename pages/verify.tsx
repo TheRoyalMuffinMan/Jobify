@@ -5,7 +5,6 @@ import Header from './components/Header';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-
 export default function Verify() {
 
     const [title, setTitle] = useState<string>('');
@@ -60,21 +59,21 @@ export default function Verify() {
         >
             <Header />
             <Flex justify="space-evenly" align="center" p="1rem" flex="1">
-                <Stack boxSize="500px" p="1rem">
-                    <Image src="/resume.svg" boxSize="500px"/>
-                    <Text color="#0EA5E9" fontSize="2rem">
+                <Stack boxSize={["250px", "300px", "300px", "400px", "600px"]} p="1rem">
+                    <Image src="/resume.svg" boxSize={["250px", "300px", "300px", "400px", "500px"]}/>
+                    <Text color="#0EA5E9" fontSize={["1rem", "1.25rem", "1.5rem", "1.5rem", "2rem"]}>
                         Empower your job search with our intelligent AI model.
                         Simply input the job posting details and recieve instant results!
                     </Text>
                 </Stack>
-                <Flex height="625px" width="550px" flexDir="column" p="1rem" bg="#334155" gap="1rem" borderRadius="2rem" color="#0EA5E9">
-                    <Text color="#0EA5E9" align="center" fontSize="1.5rem">
+                <Flex height={["250px", "300px", "400px", "550px", "625px"]} width={["250px", "300px", "400px", "450px", "550px"]} flexDir="column" p="1rem" bg="#334155" gap="1rem" borderRadius="2rem" color="#0EA5E9">
+                    <Text color="#0EA5E9" align="center" fontSize={["1rem", "1.25rem", "1.25rem", "1.5rem", "1.5rem"]}>
                         Tell us about the position you are applying to.
                     </Text>
-                    <Tabs isFitted variant='enclosed' height="475px">
+                    <Tabs isFitted variant='enclosed' height={["200px", "250px", "350px", "400px", "475px"]}>
                         <TabList mb='1em'>
                             <Tab>Company Information</Tab>
-                            <Tab>Logistics</Tab>
+                            <Tab>Logistical Information</Tab>
                             <Tab>Closing Information</Tab>
                         </TabList>
                         <TabPanels>
@@ -221,7 +220,8 @@ export default function Verify() {
                     <Flex justify="center">
                         <Button 
                             fontSize="1.25rem" 
-                            colorScheme="twitter" 
+                            color="#0F172A"
+                            bg="#0EA5E9" 
                             type="submit" 
                             p="1rem" 
                             pl="1.5rem" 
