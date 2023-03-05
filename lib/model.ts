@@ -95,13 +95,13 @@ async function run() {
     xTrain = tf.concat([xTrain, required_education], 1);
     xTrain = tf.concat([xTrain, func], 1);
 
-
+    // 0 -> Real Job Posting, 1 -> Fake Job Posting
     const yTrain = tf.tensor2d(
         postings.map((p: any) => [p.fraudulent === '0' ? 1 : 0, p.fraudulent === '1' ? 1 : 0])
     );
 
     const model = tf.sequential();
-
+    
     model.add(
         tf.layers.dense({
             inputShape: [xTrain.shape[1]],
@@ -111,23 +111,19 @@ async function run() {
     );
 
     model.compile({
-        loss: "binaryCrossentropy",
+        loss: "categoricalCrossentropy",
         optimizer: tf.train.adam(0.001),
         metrics: ["accuracy"]
     });
 
     await model.fit(xTrain, yTrain, {
-        batchSize: 128,
-        validationSplit: 0.2,
+        batchSize: 32,
+        validationSplit: 0.1,
         shuffle: true,
-        epochs: 50,
-        classWeight: {
-            0: 10000 / 866,
-            1: 10000 / 9134
-        }
-    })
+        epochs: 150
+    });
 
     await model.save(`file://./model/${MODEL_NAME}`);
 }
 
-export { run, STOPWORDS, remove_stopwords };
+export { run, remove_stopwords };
