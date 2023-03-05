@@ -1,5 +1,5 @@
 import * as use from "@tensorflow-models/universal-sentence-encoder";
-import * as tf from "@tensorflow/tfjs-node";
+import * as tf from "@tensorflow/tfjs";
 import * as natural from "natural";
 import type { NextApiRequest, NextApiResponse } from 'next';
 const { run, remove_stopwords } = require("../../lib/model");
