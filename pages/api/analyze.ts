@@ -1,4 +1,3 @@
-const { connectToDatabase } = require("../../lib/db");
 import type { NextApiRequest, NextApiResponse } from 'next';
 const { run, normalize } = require("../../lib/model");
 

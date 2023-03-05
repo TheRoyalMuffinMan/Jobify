@@ -1,4 +1,4 @@
-import * as tf from "@tensorflow/tfjs";
+import * as tf from "@tensorflow/tfjs-node";
 import * as use from "@tensorflow-models/universal-sentence-encoder";
 import * as natural from "natural";
 const postings = require("./postings.json");
@@ -55,7 +55,7 @@ async function normalize(encoder: any, postings: any, key: string) {
 
 async function run() {
     try {
-        const loadedModel = await tf.loadLayersModel(`file://postings-model/model.json`);
+        const loadedModel = await tf.loadLayersModel(`file://lib/postings-model/model.json`);
         console.log("Using existing model");
         return loadedModel;
     } catch (e) {
