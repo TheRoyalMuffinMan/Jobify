@@ -96,8 +96,8 @@ async function run() {
     xTrain = tf.concat([xTrain, func], 1);
 
 
-    const yTrain = tf.tensor1d(
-        postings.map((p: any) => p.fraudulent === '0' ? 1 : 0)
+    const yTrain = tf.tensor2d(
+        postings.map((p: any) => [p.fraudulent === '0' ? 1 : 0, p.fraudulent === '1' ? 1 : 0])
     );
 
     const model = tf.sequential();
@@ -105,8 +105,8 @@ async function run() {
     model.add(
         tf.layers.dense({
             inputShape: [xTrain.shape[1]],
-            activation: "relu",
-            units: 1
+            activation: "softmax",
+            units: 2
         })
     );
 
