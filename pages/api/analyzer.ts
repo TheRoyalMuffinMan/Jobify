@@ -67,9 +67,11 @@ async function analyzer(req: NextApiRequest, res: NextApiResponse<Data>) {
         });
         return;
     }
-
+    console.log(parsed);
     const model = await run();
+    console.log(model);
     const xPredict = await pipeline(parsed);
+    console.log(xPredict);
     const results = await model.predict(xPredict).data();
     res.json({
         response: "Model completed",
