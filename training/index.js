@@ -96,35 +96,32 @@ async function run() {
     xTrain = tfnode.concat([xTrain, func], 1);
 
 
-    const yTrain = tfnode.tensor1d(
-        postings.map(p => p.fraudulent === '0' ? 1 : 0)
+    // 0 -> Real Job Posting, 1 -> Fake Job Posting
+    const yTrain = tfnode.tensor2d(
+        postings.map(p => [p.fraudulent === '0' ? 1 : 0, p.fraudulent === '1' ? 1 : 0])
     );
 
     const model = tfnode.sequential()
-
+    
     model.add(
         tfnode.layers.dense({
             inputShape: [xTrain.shape[1]],
-            activation: "relu",
-            units: 1
+            activation: "softmax",
+            units: 2
         })
     );
 
     model.compile({
-        loss: "binaryCrossentropy",
+        loss: "categoricalCrossentropy",
         optimizer: tfnode.train.adam(0.001),
         metrics: ["accuracy"]
     });
 
     await model.fit(xTrain, yTrain, {
-        batchSize: 128,
-        validationSplit: 0.2,
+        batchSize: 32,
+        validationSplit: 0.1,
         shuffle: true,
-        epochs: 50,
-        classWeight: {
-            0: 10000 / 866,
-            1: 10000 / 9134
-        }
+        epochs: 150
     })
 
     await model.save(`file://./model/${MODEL_NAME}`);
