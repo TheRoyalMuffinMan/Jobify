@@ -1,7 +1,8 @@
 import * as use from "@tensorflow-models/universal-sentence-encoder";
 import * as tf from "@tensorflow/tfjs-node";
 import * as natural from "natural";
-const postings = require("./postings.json");
+// const postings = require("./postings.json");
+const postings = [{}];
 const MODEL_NAME = "postings-model";
 const STOPWORDS = [
     'i','me','my','myself','we','our',
