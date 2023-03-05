@@ -109,8 +109,9 @@ export default function Verify() {
                                                     pointerEvents='none'
                                                     color='gray.300'
                                                     fontSize='1.2em'
-                                                    children='$'
-                                                />
+                                                >
+                                                $
+                                                </InputLeftElement>
                                                 <Input 
                                                     type='number' 
                                                     placeholder='Starting Amount' 
@@ -129,11 +130,12 @@ export default function Verify() {
                                             </InputGroup>
                                             <InputGroup>
                                                 <InputLeftElement
-                                                pointerEvents='none'
-                                                color='gray.300'
-                                                fontSize='1.2em'
-                                                children='$'
-                                                />
+                                                    pointerEvents='none'
+                                                    color='gray.300'
+                                                    fontSize='1.2em'
+                                                >
+                                                $
+                                                </InputLeftElement>
                                                 <Input 
                                                     type='number'
                                                     placeholder='Ending Amount' 
