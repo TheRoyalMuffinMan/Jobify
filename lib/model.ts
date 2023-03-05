@@ -1,5 +1,5 @@
 import * as use from "@tensorflow-models/universal-sentence-encoder";
-import * as tf from "@tensorflow/tfjs-node";
+import * as tf from "@tensorflow/tfjs";
 import { loadLayersModel } from "@tensorflow/tfjs-node";
 import * as natural from "natural";
 // const postings = require("./postings.json");
