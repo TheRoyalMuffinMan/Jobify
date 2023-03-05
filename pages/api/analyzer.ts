@@ -11,7 +11,7 @@ type Data = {
     success?: boolean
 }
 
-async function clean(encoder: any, text: string) {
+async function clean(encoder: use.UniversalSentenceEncoder, text: string) {
     text = text.toLowerCase();
     text = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
     text = text.replace(/\s{2,}/g, " ");
@@ -21,24 +21,24 @@ async function clean(encoder: any, text: string) {
 }
 
 async function pipeline(xData: any) {
-    const encoder = await use.load();
-    let title = await clean(encoder, xData.title);
-    let location = await clean(encoder, xData.location);
-    let department = await clean(encoder, xData.department);
-    let salary_range = await clean(encoder, xData.salary_range);
-    let company_profile = await clean(encoder, xData.company_profile);
-    let description = await clean(encoder, xData.description);
-    let requirements = await clean(encoder, xData.requirements);
-    let benefits = await clean(encoder, xData.benefits);
-    let telecommuting = await clean(encoder, xData.telecommuting);
-    let has_questions = await clean(encoder, xData.has_questions);
-    let employment_type = await clean(encoder, xData.employment_type);
-    let required_experience = await clean(encoder, xData.required_experience);
-    let required_education = await clean(encoder, xData.required_education);
-    let func = await clean(encoder, xData.function);
+    const encoder: use.UniversalSentenceEncoder = await use.load();
+    let title: tf.Tensor = await clean(encoder, xData.title);
+    let location: tf.Tensor = await clean(encoder, xData.location);
+    let department: tf.Tensor = await clean(encoder, xData.department);
+    let salary_range: tf.Tensor = await clean(encoder, xData.salary_range);
+    let company_profile: tf.Tensor = await clean(encoder, xData.company_profile);
+    let description: tf.Tensor = await clean(encoder, xData.description);
+    let requirements: tf.Tensor = await clean(encoder, xData.requirements);
+    let benefits: tf.Tensor = await clean(encoder, xData.benefits);
+    let telecommuting: tf.Tensor = await clean(encoder, xData.telecommuting);
+    let has_questions: tf.Tensor = await clean(encoder, xData.has_questions);
+    let employment_type: tf.Tensor = await clean(encoder, xData.employment_type);
+    let required_experience: tf.Tensor = await clean(encoder, xData.required_experience);
+    let required_education: tf.Tensor = await clean(encoder, xData.required_education);
+    let func: tf.Tensor = await clean(encoder, xData.function);
+    console.log("All Normailzed, proceed to concat tensors.");
 
-
-    let xPredict = tf.concat([description, requirements], 1);
+    let xPredict: tf.Tensor = tf.concat([description, requirements], 1);
     xPredict = tf.concat([xPredict, title], 1);
     xPredict = tf.concat([xPredict, location], 1);
     xPredict = tf.concat([xPredict, department], 1);
@@ -82,12 +82,10 @@ async function analyzer(req: NextApiRequest, res: NextApiResponse<Data>) {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-
-    switch (req.method) {
-        case 'POST':
-            analyzer(req, res); break;
-        default:
-            res.status(403).json({ response: "Invalid Request Method", real: 0, fake: 0, success: false }) 
+    if (req.method == "POST") {
+        analyzer(req, res);
+    } else {
+        res.status(403).json({ response: "Invalid Request Method", real: 0, fake: 0, success: false }) 
     }
 }
 

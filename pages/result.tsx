@@ -1,11 +1,18 @@
 import { chakra, Flex, Spinner, CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 import Header from './components/Header';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+type Results = {
+    response: string;
+    real: number;
+    fake: number;
+    success?: boolean
+}
+
 export default function Result() {
-    const router = useRouter();
-    const [result, setResult] = useState<any | undefined>(undefined);
+    const router: NextRouter = useRouter();
+    const [result, setResult] = useState<Results | undefined>(undefined);
 
     useEffect(() => {
         if (!router.query || Object.keys(router.query).length === 0) {
@@ -18,6 +25,7 @@ export default function Result() {
         if (!params || Object.keys(params).length === 0) {
             router.push("/");
         }
+
         const response = await fetch("/api/analyzer", {
             method: "POST",
             body: JSON.stringify(params)

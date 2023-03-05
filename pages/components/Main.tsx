@@ -1,9 +1,9 @@
 import { Text, Flex, Stack, Button } from "@chakra-ui/react";
-import { useRouter } from 'next/router';
+import { useRouter, NextRouter } from 'next/router';
 
 
 export default function Main() {
-    const router = useRouter();
+    const router: NextRouter = useRouter();
 
     return (
         <Flex
@@ -15,10 +15,10 @@ export default function Main() {
             backgroundSize="cover"
         >
             <Stack spacing="5">
-                <Text fontSize="1.5rem" color="white">
+                <Text fontSize={["1.25rem", "1.25rem", "1.5rem", "1.5rem", "1.5rem"]} color="white">
                     Powered by artifical intellgence...
                 </Text>
-                <Text fontSize="1.5rem" color="#0EA5E9">
+                <Text fontSize={["1.25rem", "1.25rem", "1.5rem", "1.5rem", "1.5rem"]} color="#0EA5E9">
                     Verify every job application with ease and secure your future career.
                 </Text>
                 <Flex justify="center">

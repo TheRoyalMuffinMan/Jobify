@@ -1,8 +1,8 @@
 import { Heading, Flex } from "@chakra-ui/react";
-import { useRouter } from 'next/router';
+import { useRouter, NextRouter } from 'next/router';
 
 export default function Header() {
-    const router = useRouter();
+    const router: NextRouter = useRouter();
 
     return (
         <Flex
