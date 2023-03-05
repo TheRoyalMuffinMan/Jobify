@@ -7,11 +7,11 @@ export default function Result() {
     const router = useRouter();
     const [result, setResult] = useState<string | undefined>(undefined);
 
-    // useEffect(() => {
-    //     if (!router.query || Object.keys(router.query).length === 0) {
-    //         router.push("/");
-    //     }
-    // }, [router]);
+    useEffect(() => {
+        if (!router.query || Object.keys(router.query).length === 0) {
+            router.push("/");
+        }
+    }, [router]);
 
     async function analysis(params: object) {
         const response = await fetch("/api/analyzer", {
@@ -27,9 +27,9 @@ export default function Result() {
         console.log(result);
     }
 
-    // useEffect(() => {
-    //     analysis(router.query);
-    // });
+    useEffect(() => {
+        analysis(router.query);
+    });
 
 
     if (result === undefined) {
@@ -41,13 +41,13 @@ export default function Result() {
                 bg="#0F172A"
             >
                 <Header />
-                <Flex justify="center" align="center">
+                <Flex justify="center" align="center" flex="1">
                     <Spinner
-                        thickness='4px'
-                        speed='0.65s'
+                        thickness='12px'
+                        speed='1s'
                         emptyColor='gray.200'
                         color='blue.500'
-                        size='xl'
+                        boxSize="250px"
                     />
                 </Flex>
             </chakra.div>
