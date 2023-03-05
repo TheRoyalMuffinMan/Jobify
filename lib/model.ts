@@ -1,5 +1,6 @@
 import * as use from "@tensorflow-models/universal-sentence-encoder";
 import * as tf from "@tensorflow/tfjs";
+import { loadLayersModel } from "@tensorflow/tfjs-node";
 import * as natural from "natural";
 // const postings = require("./postings.json");
 const postings = [{}];
@@ -56,7 +57,7 @@ async function normalize(encoder: any, postings: any, key: string) {
 
 async function run() {
     try {
-        const loadedModel = await tf.loadLayersModel(`https://raw.githubusercontent.com/TheRoyalMuffinMan/Jobify/b6dda1e6f6d97db4515c141a102e4189a750bd65/lib/postings-model/model.json`);
+        const loadedModel = await loadLayersModel(`file://lib/${MODEL_NAME}/model.json`);
         console.log("Using existing model");
         return loadedModel;
     } catch (e) {
