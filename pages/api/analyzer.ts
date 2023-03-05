@@ -1,6 +1,6 @@
-import * as use from "@tensorflow-models/universal-sentence-encoder";
+import { load } from "@tensorflow-models/universal-sentence-encoder";
 import * as tf from "@tensorflow/tfjs";
-import * as natural from "natural";
+import { PorterStemmer } from "natural";
 import type { NextApiRequest, NextApiResponse } from 'next';
 const { run, remove_stopwords } = require("../../lib/model");
 
@@ -16,12 +16,12 @@ async function clean(encoder: any, text: string) {
     text = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
     text = text.replace(/\s{2,}/g, " ");
     text = remove_stopwords(text);
-    text = natural.PorterStemmer.stem(text);
+    text = PorterStemmer.stem(text);
     return await encoder.embed(`<CLR>${text}<CLR>`);
 }
 
 async function pipeline(xData: any) {
-    const encoder = await use.load();
+    const encoder = await load();
     let title = await clean(encoder, xData.title);
     let location = await clean(encoder, xData.location);
     let department = await clean(encoder, xData.department);
