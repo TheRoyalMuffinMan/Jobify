@@ -1,7 +1,8 @@
-import * as tf from "@tensorflow/tfjs-node";
 import * as use from "@tensorflow-models/universal-sentence-encoder";
+import * as tf from "@tensorflow/tfjs-node";
 import * as natural from "natural";
 const postings = require("./postings.json");
+const MODEL_NAME = "postings-model";
 const STOPWORDS = [
     'i','me','my','myself','we','our',
     'ours','ourselves','you','your',
@@ -25,7 +26,6 @@ const STOPWORDS = [
     'nor','not','only','own','same','so','than','too',
     'very','s','t','can','will','just','don','should','now'
 ];
-const MODEL_NAME = "postings-model";
 
 function remove_stopwords(sentence: string) {
     const res = []
@@ -55,7 +55,7 @@ async function normalize(encoder: any, postings: any, key: string) {
 
 async function run() {
     try {
-        const loadedModel = await tf.loadLayersModel(`file://lib/postings-model/model.json`);
+        const loadedModel = await tf.loadLayersModel(`file://lib/${MODEL_NAME}/model.json`);
         console.log("Using existing model");
         return loadedModel;
     } catch (e) {
@@ -100,7 +100,7 @@ async function run() {
         postings.map((p: any) => p.fraudulent === '0' ? 1 : 0)
     );
 
-    const model = tf.sequential()
+    const model = tf.sequential();
 
     model.add(
         tf.layers.dense({
@@ -130,4 +130,4 @@ async function run() {
     await model.save(`file://./model/${MODEL_NAME}`);
 }
 
-export { run, normalize, STOPWORDS };
+export { run, STOPWORDS, remove_stopwords };
