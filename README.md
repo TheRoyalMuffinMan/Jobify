@@ -37,9 +37,7 @@ There think there is alot to do for an application like this. Some of the things
 ### Note
 The network does take some time to run on `vercel`, this is due to that the fact that the binary of `tjs` is too large to fit on a `vercel` application.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
+## How to run
 
 First, run the development server, after `npm install`:
 
